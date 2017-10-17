@@ -8,3 +8,6 @@
 
 // Widok
 \core\View::setAssets('/materialy');
+
+// Użytkownik
+\model\UsersModel::$SALT = 'fdqwgvfGFDg4w3$%5^%$#^%hgfdCXBGrty4^%$#y ';

@@ -1,6 +1,6 @@
 <?php
 /**
- * Author: Paweł Wolak 2016
+ * Author: Paweł Wolak 2017
  *
  */
 namespace controller;
