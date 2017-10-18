@@ -14,6 +14,7 @@
 					<p><?php if($user['typ_konta'] == 'teacher' || $user['typ_konta'] == 'admin') echo $user['imie'] . ' ' . $user['nazwisko']; else echo $user['nazwa'] . ' ( '.$user['skrot'].' )';?></p>
 					<div class="circle"><i class="fa fa-user"></i></div>
 					<ul class="dropdownMenu">
+						<li><a href="<?=$this->url('/user/setting') ?>">Profil</a></li>
 						<li><a href="<?=$this->url('/logout') ?>">Wyloguj</a></li>
 					</ul>
 				</div>

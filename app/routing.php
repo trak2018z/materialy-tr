@@ -20,4 +20,16 @@ return array(
         'roles'      => array('admin', 'teacher', 'student'),
         'secured'    => true,
     ),
+    'setting_password' => array(
+        'pattern'    => 'user/setting/password',
+        'controller' => 'controller\UsersController::password',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
+    'setting' => array(
+        'pattern'    => 'user/setting',
+        'controller' => 'controller\UsersController::setting',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
 );

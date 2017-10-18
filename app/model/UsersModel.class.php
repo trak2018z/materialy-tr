@@ -104,4 +104,100 @@ class UsersModel extends \core\BaseModel {
     {
         return md5($plain.self::$SALT);
     }
+
+    /**
+     * Akcja edytuje użytkownika
+     * @param  string $idUzytkownik id użytkownika 
+     * @param  string $imie         imie użytkownika
+     * @param  string $nazwisko     nazwisko użytkownika
+     * @param  string $typ_konta    typ konta użytkownika
+     * @param  string $nazwa        nazwa użytkownika
+     * @param  string $skrot        skrót użytkownika
+     */
+    public function updateUser($idUzytkownik, $imie, $nazwisko, $typ_konta, $nazwa, $skrot)
+    {
+        $query = "UPDATE Uzytkownik
+                  SET imie = :imie,
+                      nazwisko = :nazwisko,
+                      typ_konta = :typ_konta,
+                      nazwa = :nazwa,
+                      skrot = :skrot
+                  WHERE idUzytkownik = :idUzytkownik";
+        $stm = $this->db()->prepare($query);
+        $stm->bindParam(':idUzytkownik', $idUzytkownik, \PDO::PARAM_INT);
+        $stm->bindParam(':imie', $imie, \PDO::PARAM_STR);
+        $stm->bindParam(':nazwisko', $nazwisko, \PDO::PARAM_STR);
+        $stm->bindParam(':typ_konta', $typ_konta, \PDO::PARAM_STR);
+        $stm->bindParam(':nazwa', $nazwa, \PDO::PARAM_STR);
+        $stm->bindParam(':skrot', $skrot, \PDO::PARAM_STR);
+        return $stm->execute();
+    }
+
+    /**
+     * Akcja edytuje użytkownika
+     * @param  string $idUzytkownik id użytkownika 
+     * @param  string $imie         imie użytkownika
+     * @param  string $nazwisko     nazwisko użytkownika
+     * @param  string $typ_konta    typ konta użytkownika
+     * @param  string $nazwa        nazwa użytkownika
+     * @param  string $skrot        skrót użytkownika
+     * @param  string $haslo        hasło użytkownika
+     */
+    public function updateUserAndPassword($idUzytkownik, $imie, $nazwisko, $typ_konta, $nazwa, $skrot, $haslo)
+    {
+        $query = "UPDATE Uzytkownik
+                  SET imie = :imie,
+                      nazwisko = :nazwisko,
+                      typ_konta = :typ_konta,
+                      nazwa = :nazwa,
+                      skrot = :skrot,
+                      haslo = :haslo
+                  WHERE idUzytkownik = :idUzytkownik";
+        $stm = $this->db()->prepare($query);
+        $stm->bindParam(':idUzytkownik', $idUzytkownik, \PDO::PARAM_INT);
+        $stm->bindParam(':imie', $imie, \PDO::PARAM_STR);
+        $stm->bindParam(':nazwisko', $nazwisko, \PDO::PARAM_STR);
+        $stm->bindParam(':typ_konta', $typ_konta, \PDO::PARAM_STR);
+        $stm->bindParam(':nazwa', $nazwa, \PDO::PARAM_STR);
+        $stm->bindParam(':skrot', $skrot, \PDO::PARAM_STR);
+        $stm->bindParam(':haslo', $haslo, \PDO::PARAM_STR);
+        return $stm->execute();
+    }
+
+    /**
+     * Akcja sprawdza hasła przesłane z użytkownkiem z bazy
+     * @param  integer $idUzytkownik id użytkownika
+     * @param  string $haslo        hasło przesłane
+     * @return bool               false gdy są różne
+     */
+    public function checkUserPassword($idUzytkownik, $haslo)
+    {
+        $usersModel = new UsersModel;
+        $pass = $usersModel->getUserById($idUzytkownik);
+
+        if($this->_hash($haslo) != $pass->haslo)
+        {
+            return  false;
+        }
+
+        return true;
+    }
+
+    /**
+     * updateUserPassword Aktualizacja hasła użytkownika
+     * @param  integer $idUzytkownik Numer użytkownika
+     * @param  string $haslo        Hasło użytkownika
+     * @return bool               Poprawność wykonania
+     */
+    public function updateUserPassword($idUzytkownik, $haslo)
+    {
+        $query = "UPDATE Uzytkownik
+                  SET haslo = :haslo
+                  WHERE idUzytkownik = :idUzytkownik";
+        $stm = $this->db()->prepare($query);
+        $stm->bindParam(':idUzytkownik', $idUzytkownik, \PDO::PARAM_INT);
+        $stm->bindParam(':haslo', $this->_hash($haslo), \PDO::PARAM_STR);
+        return $stm->execute();
+    }
+
 }
