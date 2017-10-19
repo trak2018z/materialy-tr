@@ -160,7 +160,7 @@ class UsersModel extends \core\BaseModel {
         $stm->bindParam(':typ_konta', $typ_konta, \PDO::PARAM_STR);
         $stm->bindParam(':nazwa', $nazwa, \PDO::PARAM_STR);
         $stm->bindParam(':skrot', $skrot, \PDO::PARAM_STR);
-        $stm->bindParam(':haslo', $haslo, \PDO::PARAM_STR);
+        $stm->bindParam(':haslo', $this->_hash($haslo), \PDO::PARAM_STR);
         return $stm->execute();
     }
 

@@ -25,6 +25,9 @@
 				<?php if (empty($user)): ?>
 					<li><a href="<?=$this->url('/login') ?>">Zaloguj</a></li>	
 				<?php endif; ?>
+				<?php if ($this->hasAccess('manager_view')): ?>
+					<li><a href="<?=$this->url('/manager/view') ?>">Uzytkownicy</a></li>
+				<?php endif; ?>
 			</ul>
 		</nav>
 		<aside class="informations bgDanger">

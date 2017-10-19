@@ -32,4 +32,29 @@ return array(
         'roles'      => array('admin', 'teacher'),
         'secured'    => true,
     ),
+    //MANAGER
+    'manager_register' => array(
+        'pattern'    => 'manager/register',
+        'controller' => 'controller\ManagerController::register',
+        'roles'      => array('admin'),
+        'secured'    => true,
+    ),
+    'manager_view' => array(
+        'pattern'    => 'manager/view',
+        'controller' => 'controller\ManagerController::view',
+        'roles'      => array('admin'),
+        'secured'    => true,
+    ),
+    'manager_view_' => array(
+        'pattern'    => 'manager/view/{1}',
+        'controller' => 'controller\ManagerController::view',
+        'roles'      => array('admin'),
+        'secured'    => true,
+    ),
+    'manager_edit' => array(
+        'pattern'    => 'manager/{1}/edit',
+        'controller' => 'controller\ManagerController::edit',
+        'roles'      => array('admin'),
+        'secured'    => true,
+    ),
 );
