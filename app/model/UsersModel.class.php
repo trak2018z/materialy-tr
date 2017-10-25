@@ -200,4 +200,47 @@ class UsersModel extends \core\BaseModel {
         return $stm->execute();
     }
 
+    /**
+     * Akcja dodająca nauczyciela
+     * @param  string $imie      imie użytkownika
+     * @param  string $nazwisko  nazwisko użytkownika
+     * @param  string $typ_konta typ konta użytkownika
+     * @param  string $login     login użytkownika
+     * @param  string $haslo     hasło użytkownika
+     */
+    public function registerTeacherUser($imie, $nazwisko, $typ_konta, $login, $haslo)
+    {
+        $haslo = $this->_hash($haslo);
+        $query = "INSERT INTO Uzytkownik (imie, nazwisko, typ_konta, login, haslo)
+                  VALUES (:imie, :nazwisko, :typ_konta, :login, :haslo)";
+        $stm   = $this->db()->prepare($query);
+        $stm->bindParam(':imie', $imie, \PDO::PARAM_STR);
+        $stm->bindParam(':nazwisko', $nazwisko, \PDO::PARAM_STR);
+        $stm->bindParam(':typ_konta', $typ_konta, \PDO::PARAM_STR);
+        $stm->bindParam(':login', $login, \PDO::PARAM_STR);
+        $stm->bindParam(':haslo', $haslo, \PDO::PARAM_STR);
+        return $stm->execute();
+    }
+
+    /**
+     * Akcja dodająca studenta
+     * @param  string $login     login użytkownika
+     * @param  string $haslo     hasło użytkownika
+     * @param  string $typ_konta typ konta użytkownika
+     * @param  string $nazwa     nazwa użytkownika
+     * @param  string $skrot     skrót użytkownika
+     */
+    public function registerStudentUser($login, $haslo, $typ_konta, $nazwa, $skrot)
+    {
+        $haslo = $this->_hash($haslo);
+        $query = "INSERT INTO Uzytkownik (login, haslo, typ_konta, nazwa, skrot)
+                  VALUES (:login, :haslo, :typ_konta, :nazwa, :skrot)";
+        $stm   = $this->db()->prepare($query);
+        $stm->bindParam(':login', $login, \PDO::PARAM_STR);
+        $stm->bindParam(':haslo', $haslo, \PDO::PARAM_STR);
+        $stm->bindParam(':typ_konta', $typ_konta, \PDO::PARAM_STR);
+        $stm->bindParam(':nazwa', $nazwa, \PDO::PARAM_STR);
+        $stm->bindParam(':skrot', $skrot, \PDO::PARAM_STR);
+        return $stm->execute();
+    }
 }

@@ -9,6 +9,8 @@ use model\UsersModel;
 use \modules\validator\LoginValidator;
 use \modules\validator\SettingValidator;
 use \modules\validator\PasswordValidator;
+use \modules\validator\RegisterStudentValidator;
+use \modules\validator\RegisterTeacherValidator;
 
 class UsersController extends \core\BaseController
 {
@@ -153,5 +155,128 @@ class UsersController extends \core\BaseController
         return $this->getView()
             ->assign('content', 'user/password.html')
             ->render('layout.html');
+    }
+
+    /**
+     * Akcja rejestrująca nauczyciela
+     */
+    public function registerTeacherAction()
+    {
+        if (false === empty($_POST)) {
+            $oValidator = new RegisterTeacherValidator;
+            if (false === $oValidator->isValid()) {
+                $oValidator->saveGlobally();
+                return $this->redirect('/user/register/teacher');
+            }
+
+            $usersModel = new UsersModel;
+            $users = $usersModel->getUserByLogin($_POST['login']);
+            $count = count($users);
+           
+            if($count != 0){
+                $this->setInfo('error', 'Takie konto już istnieje!');
+                return $this->redirect('/user/register/teacher');
+            }
+ 
+            $utf = array(
+             "ą" => "a",
+             "ć" => "c",
+             "ę" => "e",
+             "ł" => "l",
+             "ń" => "n",
+             "ó" => "o",
+             "ś" => "s",
+             "ź" => "z",
+             "ż" => "z"
+            );
+    
+            $text = str_replace(array_keys($utf), array_values($utf), strtolower($_POST['login']));
+
+            $usersModel = new UsersModel;
+            $users = $usersModel->registerTeacherUser(
+                $_POST['imie'],
+                $_POST['nazwisko'], 
+                'teacher',
+                $text,
+                $_POST['haslo']);
+
+            if (true == $users) {
+                $this->setInfo('success', 'Konto zostało utworzone.');
+                return $this->redirect('/user/register/teacher');
+
+            } else {
+                $this->setInfo('error', 'Konto nie zostało utworzone.');
+                $this->setInfo('form', $_POST);
+                return $this->redirect('/user/register/teacher');
+            }
+        }
+
+        RegisterTeacherValidator::appendToView($this->getView());
+
+        return $this->getView()
+           ->assign('content', 'user/teacher.html')
+           ->render('layout.html');
+    }
+
+    /**
+     * Akcja rejestrująca studenta
+     */
+    public function registerStudentAction()
+    {
+        if (false === empty($_POST)) {
+            $oValidator = new RegisterStudentValidator;
+            if (false === $oValidator->isValid()) {
+                $oValidator->saveGlobally();
+                return $this->redirect('/user/register/student');
+            }
+
+            $usersModel = new UsersModel;
+            $users = $usersModel->getUserByLogin($_POST['login']);
+            $count = count($users);
+
+            if($count != 0){
+                $this->setInfo('error', 'Takie konto już istnieje!');
+                return $this->redirect('/user/register/student');
+            }
+
+            $utf = array(
+             "ą" => "a",
+             "ć" => "c",
+             "ę" => "e",
+             "ł" => "l",
+             "ń" => "n",
+             "ó" => "o",
+             "ś" => "s",
+             "ź" => "z",
+             "ż" => "z"
+            );
+    
+            $text = str_replace(array_keys($utf), array_values($utf), strtolower($_POST['login']));
+
+            $usersModel = new UsersModel;
+            $users = $usersModel->registerStudentUser(
+                $text,
+                $_POST['haslo'],
+                'student',
+                $_POST['kierunek'],
+                $_POST['skrot']);
+
+            if (true == $users) {
+                $this->setInfo('success', 'Konto zostało utworzone.');
+                return $this->redirect('/user/register/student');
+
+            } else {
+                $this->setInfo('error', 'Konto nie zostało utworzone.');
+                $this->setInfo('form', $_POST);
+                return $this->redirect('/user/register/student');
+
+            }
+        }
+
+        RegisterStudentValidator::appendToView($this->getView());
+
+        return $this->getView()
+           ->assign('content', 'user/student.html')
+           ->render('layout.html');
     }
 }

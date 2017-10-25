@@ -32,6 +32,18 @@ return array(
         'roles'      => array('admin', 'teacher'),
         'secured'    => true,
     ),
+    'register_teacher' => array(
+        'pattern'    => 'user/register/teacher',
+        'controller' => 'controller\UsersController::registerTeacher',
+        'roles'      => array('admin'),
+        'secured'    => true,
+    ),
+    'register_student' => array(
+        'pattern'    => 'user/register/student',
+        'controller' => 'controller\UsersController::registerStudent',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
     //MANAGER
     'manager_register' => array(
         'pattern'    => 'manager/register',

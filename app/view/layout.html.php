@@ -25,6 +25,12 @@
 				<?php if (empty($user)): ?>
 					<li><a href="<?=$this->url('/login') ?>">Zaloguj</a></li>	
 				<?php endif; ?>
+				<?php if ($this->hasAccess('register_student')): ?>
+					<li><a href="<?=$this->url('/user/register/student') ?>">Studenci</a></li>
+				<?php endif; ?>
+				<?php if ($this->hasAccess('register_teacher')): ?>
+					<li><a href="<?=$this->url('/user/register/teacher') ?>">Nauczyciele</a></li>
+				<?php endif; ?>
 				<?php if ($this->hasAccess('manager_view')): ?>
 					<li><a href="<?=$this->url('/manager/view') ?>">Uzytkownicy</a></li>
 				<?php endif; ?>
