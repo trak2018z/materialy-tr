@@ -69,4 +69,17 @@ return array(
         'roles'      => array('admin'),
         'secured'    => true,
     ),
+    //SUBJECT
+    'subject_show' => array(
+        'pattern'    => 'subject/show',
+        'controller' => 'controller\SubjectController::show',
+        'roles'      => array('admin', 'teacher', 'student'),
+        'secured'    => true,
+    ),
+    'subject_add' => array(
+        'pattern'    => 'subject/add',
+        'controller' => 'controller\SubjectController::add',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
 );
