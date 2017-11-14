@@ -82,4 +82,22 @@ return array(
         'roles'      => array('admin', 'teacher'),
         'secured'    => true,
     ),
+    'subject_view' => array(
+        'pattern'    => 'subject/{1}/view',
+        'controller' => 'controller\SubjectController::view',
+        'roles'      => array('admin', 'teacher', 'student'),
+        'secured'    => true,
+    ),
+    'subject_view_delete' => array(
+        'pattern'    => 'subject/{1}/delete',
+        'controller' => 'controller\SubjectController::delete',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
+    'subject_view_confirm_delete' => array(
+        'pattern'    => 'subject/{1}/confirm/delete',
+        'controller' => 'controller\SubjectController::confirm',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
 );
