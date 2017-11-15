@@ -10,6 +10,7 @@ use model\LeaderModel;
 use model\UsersModel;
 use \modules\validator\SubjectValidator;
 use \modules\validator\DeleteSubjectValidator;
+use \modules\validator\LeaderValidator;
 
 class SubjectController extends \core\BaseController {
 
@@ -180,6 +181,125 @@ class SubjectController extends \core\BaseController {
             ->assign('subject', $subject)
             ->assign('id', $id)
             ->assign('content', 'subject/confirmDelete.html')
+            ->render('layout.html');
+    }
+
+    /**
+     * Akcja dodaje nowego prowadzacego do przedmiotu
+     * @param integer $id id przedmiotu
+     */
+    public function addLeaderAction($id)
+    {
+        $subjectModel = new SubjectModel;
+        $subject = $subjectModel->getSubjectById($id);
+
+        if (TRUE === empty($subject)) {
+            $this->setInfo('error', "Przedmiot nie został odnaleziony!");
+            $this->redirect('/subject/show');
+        }
+
+        if($subject->idUzytkownik != $_SESSION['user']['idUzytkownik']){
+            $this->setInfo('error', "Nie posiadasz praw do dodawania prowadzących!");
+            $this->redirect('/subject/'.$id.'/view');
+        }
+
+        if (false === empty($_POST)) {
+            $oValidator = new LeaderValidator;
+            if (false === $oValidator->isValid()) {
+                $oValidator->saveGlobally();
+                return  $this->redirect('/subject/add');
+            }
+
+            $userModel = new UsersModel;
+            $user = $userModel->getUserById($_POST['nauczyciel']);
+
+            if (TRUE === empty($user)) {
+                $this->setInfo('error', "Taki nauczyciel nie istnieje!");
+                $this->redirect('/subject/'.$id.'/view');
+            }
+
+            $checkleaderModel = new LeaderModel;
+            $check = $checkleaderModel->getLeaderByPrzedmiotAndUzytkownik($id, $_POST['nauczyciel']);
+
+            if($check == true){
+                $this->setInfo('error', "Ten nauczyciel już prowadzi ten przedmiot!");
+                $this->redirect('/subject/'.$id.'/view');
+            }
+
+            $leaderModel = new LeaderModel;
+            $leader = $leaderModel->addNewLeader($id, $_POST['nauczyciel']);
+
+            if ($leader == true) {
+                $this->setInfo('success', "Nauczyciel został dodany do przedmiotu jako prowadzący!");
+                $this->redirect('/subject/'.$id.'/view');
+            } else {
+                $this->setInfo('error', "Nauczyciel nie został dodany do przedmiotu!");
+                $this->redirect('/subject/'.$id.'/leader/add');
+            }
+        }
+
+        LeaderValidator::appendToView($this->getView());
+        
+        $userModel = new UsersModel;
+        $users = $userModel->getUsersByType('teacher');
+
+        $this->getView()
+            ->assign('users', $users)
+            ->assign('id', $id)
+            ->assign('content', 'subject/addLeader.html')
+            ->render('layout.html');
+    }
+
+    /**
+     * Akcja kasuje lidera z przedmiotu
+     * @param  integer $id  id przedmiotu
+     * @param  integer $id2 id prowadzącego
+     */
+    public function deleteLeaderAction($id, $id2)
+    {
+        $subjectModel = new SubjectModel;
+        $subject = $subjectModel->getSubjectById($id);
+
+        if (TRUE === empty($subject)) {
+            $this->setInfo('error', "Przedmiot nie został odnaleziony!");
+            $this->redirect('/subject/show');
+        }
+
+        $leaderModel = new LeaderModel;
+        $leader = $leaderModel->getLeaderByPrzedmiotAndUzytkownik($id, $id2);
+
+        if (TRUE === empty($leader)) {
+            $this->setInfo('error', "Ten nauczyciel nie prowadzi tego przedmiotu");
+            $this->redirect('/subject/'.$id.'/view');
+        }
+
+        if($subject->idUzytkownik != $_SESSION['user']['idUzytkownik']){
+            $this->setInfo('error', "Nie posiadasz praw do kasowania prowadzących!");
+            $this->redirect('/subject/'.$id.'/view');
+        }
+
+        if (false === empty($_POST)) {
+
+            $leaderModel = new LeaderModel;
+            $leader = $leaderModel->deleteLeader($id, $id2);
+
+            if ($leader == true) {
+                $this->setInfo('success', "Nauczyciel został usunięty z przedmiotu!");
+                $this->redirect('/subject/'.$id.'/view');
+            } else {
+                $this->setInfo('error', "Nauczyciel nie został usunięty z przedmiotu!");
+                $this->redirect('/subject/'.$id.'/view');
+            }
+        }
+        
+        $userModel = new UsersModel;
+        $users = $userModel->getUserById($id2);
+
+        $this->getView()
+            ->assign('usr', $users)
+            ->assign('id', $id)
+            ->assign('id2', $id2)
+            ->assign('content', 'subject/deleteLeader.html')
             ->render('layout.html');
     }
 }

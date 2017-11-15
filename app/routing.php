@@ -88,6 +88,18 @@ return array(
         'roles'      => array('admin', 'teacher', 'student'),
         'secured'    => true,
     ),
+    'subject_leader_add' => array(
+        'pattern'    => 'subject/{1}/leader/add',
+        'controller' => 'controller\SubjectController::addLeader',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
+    'subject_leader_delete' => array(
+        'pattern'    => 'subject/{1}/leader/{2}/delete',
+        'controller' => 'controller\SubjectController::deleteLeader',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
     'subject_view_delete' => array(
         'pattern'    => 'subject/{1}/delete',
         'controller' => 'controller\SubjectController::delete',

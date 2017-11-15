@@ -35,7 +35,7 @@
                                 <li style="list-style-type:disc;">
                                 <?=$value->imie ?> <?=$value->nazwisko ?>
                                 <?php if($this->isAdmin() || $this->isTeacher()): ?>
-                                <a title="dodaj" href="<?=$this->url('/subject/'.$id.'/leader/'.$value->idUzytkownik.'/delete'); ?>"><i class="fa fa-remove"></i></a>
+                                <a title="kasuj" href="<?=$this->url('/subject/'.$id.'/leader/'.$value->idUzytkownik.'/delete'); ?>"><i class="fa fa-remove"></i></a>
                                 <?php endif; ?> 
                                 </li>
                             <?php endforeach; ?>

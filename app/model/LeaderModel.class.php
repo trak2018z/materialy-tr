@@ -57,4 +57,36 @@ class LeaderModel extends \core\BaseModel {
         return $stm->fetch(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Akcja dodaje nowego prowadzącego do przedmiotu
+     * @param integer $idPrzedmiot  id przedmiotu
+     * @param integer $idUzytkownik id użytkownika
+     */
+    public function addNewLeader($idPrzedmiot, $idUzytkownik)
+    {
+        $query = "INSERT INTO Prowadzacy (idPrzedmiot, idUzytkownik)
+                  VALUES (:idPrzedmiot, :idUzytkownik)";
+        $stm   = $this->db()->prepare($query);
+        $stm->bindParam(':idPrzedmiot', $idPrzedmiot, \PDO::PARAM_INT);
+        $stm->bindParam(':idUzytkownik', $idUzytkownik, \PDO::PARAM_INT);
+        return $stm->execute();
+    }
+
+    /**
+     * Akcja kasuje prowodzącego z przedmiotu
+     * @param  integer $idPrzedmiot  id przedmiotu
+     * @param  integer $idUzytkownik id użytkownika
+     */
+    public function deleteLeader($idPrzedmiot, $idUzytkownik)
+    {
+        $query = "DELETE FROM Prowadzacy 
+                  WHERE idPrzedmiot = :idPrzedmiot
+                  AND idUzytkownik = :idUzytkownik";
+        $stm = $this->db()->prepare($query);
+        $stm->bindParam(':idPrzedmiot', $idPrzedmiot, \PDO::PARAM_INT);
+        $stm->bindParam(':idUzytkownik', $idUzytkownik, \PDO::PARAM_INT);
+        return $stm->execute();
+    }
+
+    
 }
