@@ -112,4 +112,16 @@ return array(
         'roles'      => array('admin', 'teacher'),
         'secured'    => true,
     ),
+    'subject_advertisement_add' => array(
+        'pattern'    => 'subject/{1}/advertisement/add',
+        'controller' => 'controller\SubjectController::advertisementAdd',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
+    'subject_advertisement_delete' => array(
+        'pattern'    => 'subject/{1}/advertisement/{2}/delete',
+        'controller' => 'controller\SubjectController::advertisementDelete',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
 );

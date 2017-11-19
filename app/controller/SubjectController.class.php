@@ -8,9 +8,11 @@ namespace controller;
 use model\SubjectModel;
 use model\LeaderModel;
 use model\UsersModel;
+use model\AdvertisementModel;
 use \modules\validator\SubjectValidator;
 use \modules\validator\DeleteSubjectValidator;
 use \modules\validator\LeaderValidator;
+use \modules\validator\AdvertisementValidator;
 
 class SubjectController extends \core\BaseController {
 
@@ -108,12 +110,16 @@ class SubjectController extends \core\BaseController {
         $leaderModel = new LeaderModel;
         $leaders = $leaderModel->getLeaderBySubject($id);
 
+        $advertisementModel = new AdvertisementModel;
+        $advertisements = $advertisementModel->getAdvertisementsByIdPrzedmiot($id);
+
         $this->getView()
             ->assign('leaders', $leaders)
             ->assign('usr', $usr)
             ->assign('id', $id)
             ->assign('subject', $subject)
             ->assign('content', 'subject/view.html')
+            ->assign('advertisements', $advertisements)
             ->render('layout.html');
     }
 
@@ -300,6 +306,112 @@ class SubjectController extends \core\BaseController {
             ->assign('id', $id)
             ->assign('id2', $id2)
             ->assign('content', 'subject/deleteLeader.html')
+            ->render('layout.html');
+    }
+
+    /**
+     * Akcja dodaje ogłoszenie
+     * @param  integer $id id przedmiotu
+     */
+    public function advertisementAddAction($id)
+    {
+        $subjectModel = new SubjectModel;
+        $subject = $subjectModel->getSubjectById($id);
+      
+        if (TRUE === empty($subject)) {
+            $this->setInfo('error', "Przedmiot nie został odnaleziony");
+            $this->redirect('/subject/show');
+        }   
+
+        $checkleaderModel = new LeaderModel;
+        $check = $checkleaderModel->getLeaderByPrzedmiotAndUzytkownik($id, $_SESSION['user']['idUzytkownik']);  
+
+        if($subject->idUzytkownik != $_SESSION['user']['idUzytkownik']){
+            if(TRUE === empty($check)){
+                $this->setInfo('error', "Nie posiadasz praw do dodania ogłoszenia!");
+                $this->redirect('/subject/'.$id.'/view');   
+            }    
+        }
+
+        if (false === empty($_POST)) {
+            $oValidator = new AdvertisementValidator;
+            if (false === $oValidator->isValid()) {
+                $oValidator->saveGlobally();
+                return  $this->redirect('/subject/'.$id.'/advertisement/add');
+            }
+            
+            $data = date('Y-m-d H:i:s');
+
+            $advertisementModel = new AdvertisementModel;
+            $advertisement = $advertisementModel->addNewAdvertisement(ucfirst($_POST['tytul']), $_POST['tresc'], $data, $id, $_SESSION['user']['idUzytkownik']);
+
+            if ($advertisement == true) {
+                $this->setInfo('success', "Ogłoszenie zostało dodane!");
+                $this->redirect('/subject/'.$id.'/view');
+            } else {
+                $this->setInfo('error', "Ogłoszenie nie zostało dodane!");
+                $this->redirect('/subject/'.$id.'/advertisement/add');
+            }
+        }
+
+        AdvertisementValidator::appendToView($this->getView());
+        
+        $this->getView()
+            ->assign('id', $id)
+            ->assign('content', 'subject/addAdvertisement.html')
+            ->render('layout.html');
+    }
+
+    /**
+     * Akcja kasuje ogłoszenie
+     * @param  integer $id  id przedmiotu
+     * @param  integer $id2 id ogłoszenia
+     */
+    public function advertisementDeleteAction($id, $id2)
+    {
+        $subjectModel = new SubjectModel;
+        $subject = $subjectModel->getSubjectById($id);
+      
+        if (TRUE === empty($subject)) {
+            $this->setInfo('error', "Przedmiot nie został odnaleziony!");
+            $this->redirect('/subject/show');
+        }   
+
+        $advertisementModel = new AdvertisementModel;
+        $advertisement = $advertisementModel->getAdvertisementsById($id2);
+
+        if($advertisement['idUzytkownik'] != $_SESSION['user']['idUzytkownik']){
+            $this->setInfo('error', "Nie posiadasz uprawnień do kasowania ogłoszenia!");
+            $this->redirect('/subject/'.$id.'/view');
+        }
+
+        if (false === empty($_POST)) {
+            $oValidator = new DeleteSubjectValidator;
+            if (false === $oValidator->isValid()) {
+                $oValidator->saveGlobally();
+                return  $this->redirect('/subject/'.$id.'/view');
+            }
+           
+            $advertisementModel = new AdvertisementModel;
+            $advertisement = $advertisementModel->deleteAdvertisement($id2);
+
+            if ($advertisement == true) {
+                $this->setInfo('success', "Ogłoszenie zostało skasowane!");
+                $this->redirect('/subject/'.$id.'/view');
+            } else {
+                $this->setInfo('error', "Ogłoszenie nie zostało skasowane!");
+                $this->redirect('/subject/'.$id.'/view');
+            }
+        }
+
+        $advertisementModel = new AdvertisementModel;
+        $advertisement = $advertisementModel->getAdvertisementsByIdPrzedmiot($id2);
+
+        $this->getView()
+            ->assign('id', $id)
+            ->assign('id2', $id2)
+            ->assign('advertisement', $advertisement)
+            ->assign('content', 'subject/deleteAdvertisement.html')
             ->render('layout.html');
     }
 }

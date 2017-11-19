@@ -47,5 +47,38 @@
                 </tr>
             </table>
         </div>
+        <div>
+          <hr>   
+          <header>
+          <h1 class="title">Ogłoszenia:</h1>
+          <?php if($this->isAdmin() || $this->isTeacher()): ?>
+            <a title="dodaj" href="<?=$this->url('/subject/'.$id.'/advertisement/add'); ?>" class="circle bOrange addNewElement"><i class="fa fa-plus"></i></a>
+          <?php endif; ?>         
+          </header>
+            <table>
+                <tr>
+                    <th><b>Tytuł</b></th>
+                    <th><b>Treść</b></th>
+                    <th><b>Data</b></th>
+                    <?php if($this->isAdmin() || $this->isTeacher()): ?>          
+                    <th class="tar"><b>Opcje</b></th>
+                    <?php endif; ?>
+                </tr>
+                    <?php foreach ($advertisements as $value): ?>
+                        <tr>
+                        <td><?=$value->tytul?></td>
+                        <td><?=$value->tresc?></td>
+                        <td><?=$value->data?></td>
+                        <?php if($this->isAdmin() || $this->isTeacher()): ?>
+                        <td>
+                            <ul class="tableTools">
+                                <li><a href="<?=$this->url('/subject/'.$id.'/advertisement/'.$value->idOgloszenia.'/delete'); ?>"><i class="fa fa-remove"></i> Kasuj</a></li>
+                            </ul>
+                        </td>
+                        <?php endif; ?>
+                        </tr>
+                    <?php endforeach; ?>
+            </table>
+        </div>
     </main>
 </div>
