@@ -124,4 +124,52 @@ return array(
         'roles'      => array('admin', 'teacher'),
         'secured'    => true,
     ),
+    'subject_category_add' => array(
+        'pattern'    => 'subject/{1}/category/add',
+        'controller' => 'controller\SubjectController::categoryAdd',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
+    'subject_category_edit' => array(
+        'pattern'    => 'subject/{1}/category/{2}/edit',
+        'controller' => 'controller\SubjectController::categoryEdit',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
+    'subject_category_delete' => array(
+        'pattern'    => 'subject/{1}/category/{2}/delete',
+        'controller' => 'controller\SubjectController::categoryDelete',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
+    'subject_subcategory_add' => array(
+        'pattern'    => 'subject/{1}/subcategory/{2}/add',
+        'controller' => 'controller\SubjectController::subcategoryAdd',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
+    'subject_subcategory_edit' => array(
+        'pattern'    => 'subject/{1}/subcategory/{2}/edit',
+        'controller' => 'controller\SubjectController::subcategoryEdit',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
+    'subject_subcategory_delete' => array(
+        'pattern'    => 'subject/{1}/subcategory/{2}/delete',
+        'controller' => 'controller\SubjectController::subcategoryDelete',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
+    'subject_subcategory_addfile' => array(
+        'pattern'    => 'subject/{1}/subcategory/{2}/add/file',
+        'controller' => 'controller\SubjectController::fileAdd',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
+    'subject_subcategory_deletefile' => array(
+        'pattern'    => 'subject/{1}/file/{2}/delete',
+        'controller' => 'controller\SubjectController::fileDelete',
+        'roles'      => array('admin', 'teacher'),
+        'secured'    => true,
+    ),
 );
