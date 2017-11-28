@@ -16,12 +16,10 @@
            </ul>
     </header>
     <main class="main p10">
-        <div>
-            <header>
-                <h1 class="title">Informacje:</h1>
+        <div><header>
+            <h1 class="title">Informacje:</h1>
             </header>
-            <table class="table table-striped">
-              <thead class="thead-light">
+            <table>
                 <tr>
                     <th><b>Koordynator przedmiotu</b></th>
                     <th><b>Prowadzący przedmiot</b></th>
@@ -29,14 +27,12 @@
                     <th><b>Skrót kierunku</b></th> 
                     <th><b>Ostatnia aktualizacja</b></th> 
                 </tr>
-              </thead>
-              <tbody>
                 <tr>
                     <td><?=$subject->imie ?> <?=$subject->nazwisko ?></td>
                     <td>
                         <ul>
                             <?php foreach ($leaders as $value): ?>
-                                <li style="list-style-type:disc;margin-left: 20px;">
+                                <li style="list-style-type:disc;">
                                 <?=$value->imie ?> <?=$value->nazwisko ?>
                                 <?php if($this->isAdmin() || $this->isTeacher()): ?>
                                 <a title="kasuj" href="<?=$this->url('/subject/'.$id.'/leader/'.$value->idUzytkownik.'/delete'); ?>"><i class="fa fa-remove"></i></a>
@@ -49,30 +45,26 @@
                     <td><?=$usr->skrot ?></td> 
                     <td><?=$subject->aktualizacja ?></td> 
                 </tr>
-              </tbody>
             </table>
         </div>
         <div>
           <hr>   
           <header>
-            <h1 class="title">Ogłoszenia:</h1>
-            <?php if($this->isAdmin() || $this->isTeacher()): ?>
-                <a title="dodaj" href="<?=$this->url('/subject/'.$id.'/advertisement/add'); ?>" class="circle bOrange addNewElement"><i class="fa fa-plus"></i></a>
-            <?php endif; ?>         
+          <h1 class="title">Ogłoszenia:</h1>
+          <?php if($this->isAdmin() || $this->isTeacher()): ?>
+            <a title="dodaj" href="<?=$this->url('/subject/'.$id.'/advertisement/add'); ?>" class="circle bOrange addNewElement"><i class="fa fa-plus"></i></a>
+          <?php endif; ?>         
           </header>
-            <table class="table table-striped">
-              <thead class="thead-light">
+            <table>
                 <tr>
                     <th><b>Tytuł</b></th>
                     <th><b>Treść</b></th>
                     <th><b>Data</b></th>
                     <?php if($this->isAdmin() || $this->isTeacher()): ?>          
-                        <th class="tar"><b>Opcje</b></th>
+                    <th class="tar"><b>Opcje</b></th>
                     <?php endif; ?>
                 </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($advertisements as $value): ?>
+                    <?php foreach ($advertisements as $value): ?>
                         <tr>
                         <td><?=$value->tytul?></td>
                         <td><?=$value->tresc?></td>
@@ -85,8 +77,7 @@
                         </td>
                         <?php endif; ?>
                         </tr>
-                <?php endforeach; ?>
-              </tbody>
+                    <?php endforeach; ?>
             </table>
         </div>
         <div>

@@ -4,9 +4,7 @@
 		<meta charset="utf-8"/>
 		<title>System udostępniania materiałów</title>
 		<link rel="stylesheet" href="<?=$this->assets('/web/css/style.css')?>"/>
-		<link rel="stylesheet" href="<?=$this->assets('/web/css/bootstrap.min.css')?>"/>
-		<script src="<?=$this->assets('/web/js/jquery-3.2.1.min.js')?>"></script>
-		<script src="<?=$this->assets('/web/js/bootstrap.min.js')?>"></script>
+		<script src="<?=$this->assets('/web/js/jquery-1.10.2.js')?>"></script>
  		<script src="<?=$this->assets('/web/js/main.js')?>"></script>
 	</head>
 	<body>
@@ -42,7 +40,7 @@
 			<noscript><p class="error"><p>Twoja przeglądarka nie obsługuje JavaScript.<br />Prosimy o włączenie JavaScript w celu poprawnego działania strony.</p></noscript>
 		</aside>
 		<?php if (isset($error) || isset($success)): ?>
-			<aside class="informations alert <?=(isset($error)?'alert-danger':'alert-success') ?>  ">
+			<aside class="informations <?=(isset($error)?'bgDanger':'bgSuccess') ?>">
 				<p>
 					<?php if (isset($error)): ?><?=$error?><?php endif; ?>
 					<?php if (isset($success)): ?><?=$success?><?php endif; ?>
@@ -50,7 +48,7 @@
 				<span class="closeInformations"><i class="fa fa-close"></i></span>
 			</aside>
         <?php elseif (false === empty($form['info'])): ?>
-            <aside class="informations alert <?=((false === $form['info']['_success'])?'alert-danger':'alert-success') ?>">
+            <aside class="informations <?=((false === $form['info']['_success'])?'bgDanger':'bgSuccess') ?>">
                 <p>
                     <?=$form['info']['_html']?>
                 </p>
