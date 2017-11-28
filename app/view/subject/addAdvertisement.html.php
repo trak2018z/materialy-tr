@@ -12,7 +12,7 @@
             <p class="formError"><?=$form['info']['tytul']?></p>
             <label>
                 Treść:
-                <textarea name="tresc" maxlength="200"><?php if(!empty($form['fields']['tresc'])): echo $form['fields']['tresc']; else: ?>Wpisz treść...<?php endif;?></textarea>
+                <textarea name="tresc" maxlength="200" placeholder="<?php if(!empty($form['fields']['tresc'])): echo $form['fields']['tresc']; else: ?>Wpisz treść...<?php endif;?>"></textarea>
             </label>
             <p class="formError"><?=$form['info']['tresc']?></p>
             <label>
