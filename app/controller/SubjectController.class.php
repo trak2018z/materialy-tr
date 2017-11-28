@@ -866,4 +866,13 @@ class SubjectController extends \core\BaseController {
         $this->redirect('/subject/'.$id.'/view');
 
     }
+    /**
+     * Akcja ściągająca plik
+     * @param  integer $idPlik id pliku z URL
+     * @param  string $nazwa  nazwa z URL
+     */
+    public function fileDownloadAction($idPlik, $nazwa){
+        $file = new FileController($idPlik, $nazwa);
+        $file->fileDownload();
+    }
 }
