@@ -36,6 +36,93 @@ CREATE TABLE IF NOT EXISTS `materialy`.`Uzytkownik` (
   PRIMARY KEY (`idUzytkownik`)  COMMENT '')
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `materialy`.`Przedmiot`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `materialy`.`Przedmiot` ;
+
+CREATE TABLE IF NOT EXISTS `materialy`.`Przedmiot` (
+  `idPrzedmiot` INT(10) NOT NULL AUTO_INCREMENT COMMENT '',
+  `nazwa` VARCHAR(45) NOT NULL COMMENT '',
+  `aktualizacja` DATETIME NOT NULL COMMENT '',
+  `idUzytkownik` INT NOT NULL COMMENT '',
+  `uzytkownik` INT NOT NULL COMMENT '',
+  PRIMARY KEY (`idPrzedmiot`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `materialy`.`Kategoria`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `materialy`.`Kategoria` ;
+
+CREATE TABLE IF NOT EXISTS `materialy`.`Kategoria` (
+  `idKategoria` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `nazwa` VARCHAR(45) NOT NULL COMMENT '',
+  `idPrzedmiot` INT NOT NULL COMMENT '',
+  `idUzytkownik` INT NOT NULL COMMENT '',
+  PRIMARY KEY (`idKategoria`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `materialy`.`Podkategoria`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `materialy`.`Podkategoria` ;
+
+CREATE TABLE IF NOT EXISTS `materialy`.`Podkategoria` (
+  `idPodkategoria` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `nazwa` VARCHAR(45) NOT NULL COMMENT '',
+  `idKategoria` INT NOT NULL COMMENT '',
+  `idUzytkownik` INT NOT NULL COMMENT '',
+  INDEX `fk_Podkategoria_Kategoria_idx` (`idKategoria` ASC)  COMMENT '',
+  PRIMARY KEY (`idPodkategoria`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `materialy`.`Prowadzacy`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `materialy`.`Prowadzacy` ;
+
+CREATE TABLE IF NOT EXISTS `materialy`.`Prowadzacy` (
+  `idPrzedmiot` INT NOT NULL COMMENT '',
+  `idUzytkownik` INT NOT NULL COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `materialy`.`Ogloszenia`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `materialy`.`Ogloszenia` ;
+
+CREATE TABLE IF NOT EXISTS `materialy`.`Ogloszenia` (
+  `idOgloszenia` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `tytul` VARCHAR(45) NOT NULL COMMENT '',
+  `tresc` VARCHAR(45) NOT NULL COMMENT '',
+  `idPrzedmiot` INT NOT NULL COMMENT '',
+  `data` DATETIME NOT NULL COMMENT '',
+  `idUzytkownik` INT NOT NULL COMMENT '',
+  PRIMARY KEY (`idOgloszenia`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `materialy`.`Plik`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `materialy`.`Plik` ;
+
+CREATE TABLE IF NOT EXISTS `materialy`.`Plik` (
+  `idPlik` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `nazwa` VARCHAR(45) NOT NULL COMMENT '',
+  `data` VARCHAR(45) NOT NULL COMMENT '',
+  `idUzytkownik` INT NOT NULL COMMENT '',
+  `idPodkategoria` INT NOT NULL COMMENT '',
+  `tytul` VARCHAR(45) NOT NULL COMMENT '',
+  PRIMARY KEY (`idPlik`)  COMMENT '',
+  UNIQUE INDEX `idPlik_UNIQUE` (`idPlik` ASC)  COMMENT '')
+ENGINE = InnoDB;
+
 INSERT INTO Uzytkownik (`idUzytkownik`, `login`, `imie`, `nazwisko`, `haslo`, `typ_konta`, `nazwa`, `skrot`) VALUES 
 (1, 'admin', 'admin', 'admin', '4f491f4950c1d7ca054f9f97e457cf79', 'admin', '', '');
 
