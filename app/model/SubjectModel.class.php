@@ -136,4 +136,42 @@ class SubjectModel extends \core\BaseModel {
         return $stm->execute();
     }
 
+    public function getSubjectByName($nazwa, $uzytkownik)
+    {
+        $query = "SELECT *
+                  FROM Przedmiot
+                  WHERE nazwa LIKE CONCAT('%', :nazwa, '%')
+                  AND uzytkownik = :uzytkownik";
+        $stm = $this->db()->prepare($query);
+        $stm->bindParam(':uzytkownik', $uzytkownik, \PDO::PARAM_INT);
+        $stm->bindParam(':nazwa', $nazwa, \PDO::PARAM_STR);
+        $stm->execute();
+        return $stm->fetchAll(\PDO::FETCH_CLASS);
+    }
+
+    public function getSubjectsCreateByAndName($idUzytkownik, $nazwa)
+    {
+        $query = "SELECT *
+                  FROM Przedmiot
+                  WHERE nazwa LIKE CONCAT('%', :nazwa, '%')
+                  AND idUzytkownik = :idUzytkownik";
+        $stm = $this->db()->prepare($query);
+        $stm->bindParam(':idUzytkownik', $idUzytkownik, \PDO::PARAM_INT);
+        $stm->bindParam(':nazwa', $nazwa, \PDO::PARAM_STR);
+        $stm->execute();
+        return $stm->fetchAll(\PDO::FETCH_CLASS);
+    }
+
+    public function getSubjectsByName($nazwa)
+    {
+        $start = $page*$results;
+        $query = "SELECT *
+                  FROM Przedmiot
+                  WHERE nazwa LIKE CONCAT('%', :nazwa, '%')";
+        $stm = $this->db()->prepare($query);
+        $stm->bindParam(':nazwa', $nazwa, \PDO::PARAM_STR);
+        $stm->execute();
+        return $stm->fetchAll(\PDO::FETCH_CLASS);
+    }
+
 }

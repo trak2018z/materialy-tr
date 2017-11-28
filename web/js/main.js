@@ -48,7 +48,38 @@ $(document).ready(function(){
        }
        return false;
     });
-    
+
+    function search(){
+        $.ajax({
+            url: $('#searchForm').attr('action'),
+            type: 'POST',
+            data: $('#searchForm').serialize()
+        }).done(function(data) {    
+            $('#subs').find('.test').remove();
+            if(data.status === true){
+                for (var i = 0; i < data.sub.length; i++) {
+                    line = '<tr class="test">';
+                    line += '<td><a href="'+data.sub[i].idPrzedmiot+'/view"><i class="fa fa-graduation-cap fa-1x"></i> '+data.sub[i].nazwa+'</a></td>';
+                    line += '<td>'+data.sub[i].aktualizacja+'</td>';
+                    line += '</tr>';
+                    $('#subs').append(line);
+                }
+            }else{
+                line = '<tr class="test">';
+                line += '<td>'+data.message+'</td>';
+                line += '</tr>';
+                $('#subs').append(line);
+            }
+        });
+    }
+
+    $('#searchForm').change(function(e){
+        e.preventDefault();
+        search();
+    });   
+
+    $('#searchForm',function(){search();});
+
 });
 
 function inner(){

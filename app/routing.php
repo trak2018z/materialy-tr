@@ -172,6 +172,12 @@ return array(
         'roles'      => array('admin', 'teacher'),
         'secured'    => true,
     ),
+    'search' => array(
+        'pattern'    => 'subject/search',
+        'controller' => 'controller\SubjectController::search',
+        'roles'      => array('admin', 'teacher', 'student'),
+        'secured'    => true,
+    ),
     //FILE
     'subject_file_download' => array(
         'pattern'    => 'file/{1}/{2}',
