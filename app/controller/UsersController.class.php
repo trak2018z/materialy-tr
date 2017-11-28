@@ -145,7 +145,7 @@ class UsersController extends \core\BaseController
             $user = $userModel->updateUserPassword($_SESSION['user']['idUzytkownik'], $_POST['nowe_haslo']);
 
             if ($user == true) {
-                $this->setInfo('error', "Twoje hasło zostało zmienione!");
+                $this->setInfo('success', "Twoje hasło zostało zmienione!");
                 $this->redirect('/user/setting');
             } else {
                 $this->setInfo('error', "Twoje hasło nie zostało zmienione!");

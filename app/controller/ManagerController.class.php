@@ -48,7 +48,7 @@ class ManagerController extends \core\BaseController {
                                            $_POST['nazwa'], $_POST['skrot']);
 
             if($user == true) {
-                $this->setInfo('error', "Użytkownik został zaktualizowany");
+                $this->setInfo('success', "Użytkownik został zaktualizowany");
                 $this->redirect('/manager/'.$id.'/edit');
             } else {
                 $this->setInfo('error', "Użytkownik niezostał zaktualizowany");

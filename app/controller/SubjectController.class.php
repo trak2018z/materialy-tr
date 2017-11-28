@@ -866,4 +866,50 @@ class SubjectController extends \core\BaseController {
         $this->redirect('/subject/'.$id.'/view');
 
     }
+    /**
+     * Akcja ściągająca plik
+     * @param  integer $idPlik id pliku z URL
+     * @param  string $nazwa  nazwa z URL
+     */
+    public function fileDownloadAction($idPlik, $nazwa){
+        $file = new FileController($idPlik, $nazwa);
+        $file->fileDownload();
+    }
+
+    public function searchAction(){
+        $sMethod = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
+        if ('POST' !== $sMethod) {
+            header('HTTP/1.0 405 Method Not Allowed');
+            $this->redirect('/show');
+        }
+        $subjectModel = new SubjectModel;
+        if($_SESSION['user']['typ_konta'] == 'teacher'){
+            if(!empty($_POST['searchSubject']))
+                $subjects = $subjectModel->getSubjectsCreateByAndName($_SESSION['user']['idUzytkownik'], $_POST['searchSubject']);
+            else
+                $subjects = $subjectModel->getSubjectsCreateBy($_SESSION['user']['idUzytkownik']);
+        }elseif($_SESSION['user']['typ_konta'] == 'student') {
+            if(!empty($_POST['searchSubject']))
+                $subjects = $subjectModel->getSubjectByName($_POST['searchSubject'], $_SESSION['user']['idUzytkownik']);
+            else
+                $subjects = $subjectModel->getSubjectsForStudent($_SESSION['user']['idUzytkownik']);
+        }else{
+            if(!empty($_POST['searchSubject']))
+                $subjects = $subjectModel->getSubjectsByName($_POST['searchSubject']);
+            else
+                $subjects = $subjectModel->getSubjects();
+        }
+        
+        $aResponse = array();
+        if (TRUE === empty($subjects)) {
+            $aResponse['status'] = false;
+            $aResponse['message'] = 'Przedmiot nie został odnaleziony!';
+        }else{
+            $aResponse['sub'] = $subjects;
+            $aResponse['status'] = true;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($aResponse);
+    }
 }

@@ -3,7 +3,7 @@
 error_reporting(E_ALL ^ E_NOTICE);
 
 define('APP_PATH', __DIR__.'/app');
-define('URL_PREFIX', '/materialy');
+define('URL_PREFIX', '');
 
 if ($_SERVER['REQUEST_URI'] === (URL_PREFIX.'/')) {
     header('Location: '.URL_PREFIX.'/home');

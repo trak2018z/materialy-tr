@@ -123,6 +123,7 @@ li.li {
 	margin-left: -15px;
 	list-style: none;
 	margin-top:5px;
+	top: 2px;
 }
 li.file{
 	margin-left: -1px !important;
@@ -140,18 +141,18 @@ li.lie {
 }
 li.file:hover{background-color: #cccccc;}
 li.file a[title] { background: url(../img/file/file.png) 8px 0px no-repeat; }
-li.file a[title $= '.pdf']	{ background: url(../img/file/pdf.png) 0px -7px no-repeat; }
-li.file a[title $= '.doc']	{ background: url(../img/file/doc.png) 0px -7px no-repeat; }
-li.file a[title $= '.docx']	{ background: url(../img/file/docx.png) 0px -7px no-repeat; }
-li.file a[title $= '.exe']	{ background: url(../img/file/exe.png) 0px -7px no-repeat; }
-li.file a[title $= '.jpg']	{ background: url(../img/file/jpg.png) 0px -7px no-repeat; }
-li.file a[title $= '.ods']	{ background: url(../img/file/ods.png) 0px -7px no-repeat; }
-li.file a[title $= '.odt']	{ background: url(../img/file/odt.png) 0px -7px no-repeat; }
-li.file a[title $= '.png']	{ background: url(../img/file/png.png) 0px -7px no-repeat; }
-li.file a[title $= '.ppt']	{ background: url(../img/file/ppt.png) 0px -7px no-repeat; }
-li.file a[title $= '.txt']	{ background: url(../img/file/txt.png) 0px -7px no-repeat; }
-li.file a[title $= '.xls']	{ background: url(../img/file/xls.png) 0px -7px no-repeat; }
-li.file a[title $= '.xlsx']	{ background: url(../img/file/xlsx.png) 0px -7px no-repeat; }	
+li.file a[title $= '.pdf']	{ background: url(../img/file/pdf.png) 0px -10px no-repeat; }
+li.file a[title $= '.doc']	{ background: url(../img/file/doc.png) 0px -10px no-repeat; }
+li.file a[title $= '.docx']	{ background: url(../img/file/docx.png) 0px -10px no-repeat; }
+li.file a[title $= '.exe']	{ background: url(../img/file/exe.png) 0px -10px no-repeat; }
+li.file a[title $= '.jpg']	{ background: url(../img/file/jpg.png) 0px -10px no-repeat; }
+li.file a[title $= '.ods']	{ background: url(../img/file/ods.png) 0px -10px no-repeat; }
+li.file a[title $= '.odt']	{ background: url(../img/file/odt.png) 0px -10px no-repeat; }
+li.file a[title $= '.png']	{ background: url(../img/file/png.png) 0px -10px no-repeat; }
+li.file a[title $= '.ppt']	{ background: url(../img/file/ppt.png) 0px -10px no-repeat; }
+li.file a[title $= '.txt']	{ background: url(../img/file/txt.png) 0px -10px no-repeat; }
+li.file a[title $= '.xls']	{ background: url(../img/file/xls.png) 0px -10px no-repeat; }
+li.file a[title $= '.xlsx']	{ background: url(../img/file/xlsx.png) 0px -10px no-repeat; }	
 
 li.li input[type='checkbox']{
 	position: absolute;
@@ -161,10 +162,10 @@ li.li input[type='checkbox']{
 	cursor: pointer;
 	height: 14px;
 	width: 14px;
-	top: 0px;
+	top: 3px;
 }
 li.li input + ol{
-	background: url(../img/arrow_right.png) 40px 0 no-repeat;
+	background: url(../img/arrow_right.png) 40px 3px no-repeat;
 	margin: -35px 0 0 -45px;
 	height: 30px;
 }
@@ -174,10 +175,9 @@ li.li input + ol > li {
 	padding-left: 1px; 
 }
 li.li div.folder, li.li label{
-	background:  url(../img/folder.png) 25px -2px no-repeat;
 	cursor: pointer;
 	display: block;
-	padding-left: 60px;
+	padding-left: 20px;
 	font-size: 15px;
 	height: 30px;
 }
@@ -273,9 +273,8 @@ li.li a.confirmDelete{float: right; color:#1E88E5; padding-top: 1px;}
 
 	li.li div.folder, li.li label{
 		font-size: 25px;
-		padding-left: 130px;
+		padding-left: 40px;
 		padding-top: 5px;
-		background:  url(../img/folder_big.png) 50px 0px no-repeat;
 		height: 50px;
 	}
 	li.li input + ol{
@@ -283,8 +282,8 @@ li.li a.confirmDelete{float: right; color:#1E88E5; padding-top: 1px;}
 	}
 
 	li.li input[type='checkbox']{
-		height: 40px;
-		width: 40px;
+		height: 30px;
+		width: 30px;
 		top: 1px;
 	}
 
@@ -295,7 +294,7 @@ li.li a.confirmDelete{float: right; color:#1E88E5; padding-top: 1px;}
 	}
 	li.li input:checked + ol{
 		background: url(../img/arrow_down_big.png) 40px 3px no-repeat;
-		padding: 30px 0 0 100px;
+		padding: 30px 10px 0 100px;
 		height: auto;
 	}
 	li.li input:checked + ol > li {

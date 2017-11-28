@@ -11,17 +11,17 @@
         <?php else: ?>    
             <h2>Twoje przedmioty: </h2>
         <?php endif;?>
-        <table>
+        <table id="subs">
+            <tr>
+                <td>
+                    <form method="POST" action="<?=$this->url('/subject/search'); ?>" id="searchForm">
+                        Wyszukaj: <input type="text" name="searchSubject">
+                    </form>
+                </td><td></td>
             <tr>
                 <th>Nazwa przedmiotu</th>
                 <th>Ostatnia aktualizacja przedmiotu</th>
             </tr>
-                <?php foreach ($subjects as $value): ?>
-        			<tr>
-                    <td><a href="<?=$this->url('/subject/'.$value->idPrzedmiot.'/view')?>"><i class="fa fa-graduation-cap fa-1x"></i> <?=$value->nazwa?></a></td>
-                    <td><?=$value->aktualizacja?></td>
-                    </tr>
-                <?php endforeach; ?>
         </table>
         <?php if($user['typ_konta'] == 'teacher'): ?>
         <hr>
